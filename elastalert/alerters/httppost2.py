@@ -21,6 +21,7 @@ class HTTPPost2Alerter(Alerter):
         self.post_proxy = self.rule.get('http_post2_proxy', None)
         self.post_payload = self.rule.get('http_post2_payload', {})
         self.post_raw_fields = self.rule.get('http_post2_raw_fields', {})
+        self.post_static_payload = self.rule.get('http_post_static_payload', {})
         self.post_all_values = self.rule.get('http_post2_all_values', not self.post_payload)
         self.post_http_headers = self.rule.get('http_post2_headers', {})
         self.post_ca_certs = self.rule.get('http_post2_ca_certs')
@@ -31,6 +32,7 @@ class HTTPPost2Alerter(Alerter):
         """ Each match will trigger a POST to the specified endpoint(s). """
         for match in matches:
             payload = match if self.post_all_values else {}
+            payload.update(self.post_static_payload)
             for post_key, post_value in list(self.post_payload.items()):
                 post_key_template = Template(post_key)
                 post_key_res = post_key_template.render(**match)
