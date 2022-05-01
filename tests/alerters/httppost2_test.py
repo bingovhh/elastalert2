@@ -72,8 +72,15 @@ def test_http_alerter_with_payload_raw_fields(caplog):
     with mock.patch('requests.post') as mock_post_request:
         alert.alert([match])
     expected_data = {
-        'posted_name': 'toto',
-        'posted_raw_field': 'foobarbaz'
+        "service": "LogstashMonitor",
+        "token": "a8a096476fb7671492efebb59d85863c",
+        "subject": "[test]【Elastalert】HttpLog test",
+        "to":
+        [
+            "zhangzb10@lenovo.com"
+        ],
+        "content": "toto",
+        "posted_raw_field": "foobarbaz"
     }
     mock_post_request.assert_called_once_with(
         rule['http_post2_url'],
