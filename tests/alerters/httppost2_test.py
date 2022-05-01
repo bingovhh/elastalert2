@@ -81,7 +81,7 @@ def test_http_alerter_with_payload_raw_fields(caplog):
         headers={'Content-Type': 'application/json', 'Accept': 'application/json;charset=utf-8'},
         proxies=None,
         timeout=10,
-        verify=True
+        verify=False
     )
     assert expected_data == json.loads(mock_post_request.call_args_list[0][1]['data'])
     assert ('elastalert', logging.INFO, 'HTTP Post 2 alert sent.') == caplog.record_tuples[0]
