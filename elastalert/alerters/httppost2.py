@@ -21,7 +21,7 @@ class HTTPPost2Alerter(Alerter):
         self.post_proxy = self.rule.get('http_post2_proxy', None)
         self.post_payload = self.rule.get('http_post2_payload', {})
         self.post_raw_fields = self.rule.get('http_post2_raw_fields', {})
-        self.post_static_payload = self.rule.get('http_post_static_payload', {})
+        self.post_static_payload = self.rule.get('http_post2_static_payload', {})
         self.post_all_values = self.rule.get('http_post2_all_values', not self.post_payload)
         self.post_http_headers = self.rule.get('http_post2_headers', {})
         self.post_ca_certs = self.rule.get('http_post2_ca_certs')
@@ -62,6 +62,7 @@ class HTTPPost2Alerter(Alerter):
                 headers[header_key_res] = header_value_res
 
             proxies = {'https': self.post_proxy} if self.post_proxy else None
+            elastalert_logger.info("HTTP Post 2 payload: %s" % (json.dumps(payload, cls=DateTimeEncoder)))
             for url in self.post_url:
                 try:
                     response = requests.post(url, data=json.dumps(payload, cls=DateTimeEncoder),

@@ -49,10 +49,17 @@ def test_http_alerter_with_payload_raw_fields(caplog):
     rule = {
         'name': 'Test HTTP Post Alerter With Payload and raw fields',
         'type': 'any',
-        'http_post2_url': 'http://test.webhook.url',
-        'http_post2_payload': {'posted_name': 'toto'},
+        'http_post2_ignore_ssl_errors': True,
+        'http_post2_url': 'https://xmessage-api-t.earth.xpaas.lenovo.com/api/open/email/send',
+        'http_post2_payload': {'content': 'toto'},
         'http_post2_raw_fields': {'posted_raw_field': 'somefield'},
-        'http_post2_static_payload': {'name': 'somestaticname'},
+        'http_post2_static_payload':
+            {
+                'service': 'LogstashMonitor',
+                'token':'a8a096476fb7671492efebb59d85863c',
+                'subject':'[test]【Elastalert】HttpLog test',
+                'to': ['zhangzb10@lenovo.com']
+            },
         'alert': []
     }
     rules_loader = FileRulesLoader({})
