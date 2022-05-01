@@ -62,7 +62,7 @@ class HTTPPost2Alerter(Alerter):
                 headers[header_key_res] = header_value_res
 
             proxies = {'https': self.post_proxy} if self.post_proxy else None
-            # elastalert_logger.info("HTTP Post 2 payload: %s" % (json.dumps(payload, cls=DateTimeEncoder)))
+            elastalert_logger.info("HTTP Post 2 payload: %s" % (json.dumps(payload, cls=DateTimeEncoder)))
             for url in self.post_url:
                 try:
                     response = requests.post(url, data=json.dumps(payload, cls=DateTimeEncoder),
